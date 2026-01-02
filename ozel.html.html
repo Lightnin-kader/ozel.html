@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<body style="
+	margin:0;
+	height:100vh;
+	background-image:url('biz.jpeg');
+	background-size:cover;
+	background-position:center;
+	background-repeat:no-repeat;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	font-family:Arial, Helvetica, sans-serif;
+	color:white;
+	text-align:center;
+	overflow:hidden;
+">
+
+    <div id="overlay" style="
+		background:rgba(0,0,0,0.55);
+		padding:40px 30px;
+		border-radius:20px;
+		max-width:90%;
+		display:none;
+	">
+
+        <h1 id="loveText" style="
+			font-size:42px;
+			opacity:0;
+			transition:opacity 0.6s;
+		">
+            Seni seviyorum NAZ ❤️
+        </h1>
+
+        <p id="countryText" style="
+			margin-top:15px;
+			font-size:18px;
+			opacity:0;
+			transition:opacity 0.6s;
+		">
+            Türkçe – Türkiye
+        </p>
+    </div>
+
+    <button id="startBtn" style="
+		padding:16px 28px;
+		font-size:18px;
+		border:none;
+		border-radius:40px;
+		cursor:pointer;
+		background:#ff4d6d;
+		color:white;
+		box-shadow:0 0 20px rgba(255,77,109,0.6);
+	">
+        BURAYA TIKLA ✨<br> SİHİR BAŞLASIN
+    </button>
+
+    <script>
+        /* 🔐 İSİMLER */
+        const SECRET_NAME = "NAZ";     // girişte sorulan isim (BÜYÜK HARF)
+        const LOVER_NAME = "NAZ";     // ekranda gözükecek isim
+
+        const enteredName = prompt("Bu sayfa kimin için? 💖");
+
+        if (!enteredName || enteredName.toUpperCase() !== SECRET_NAME) {
+            document.body.innerHTML = "<h2>❌ Bu sayfa sana ait değil.</h2>";
+        }
+
+        /* 🌍 DİLLER */
+        const loves = [
+            { text: "Seni seviyorum", country: "Türkçe – Türkiye" },
+            { text: "I love you", country: "İngilizce – ABD" },
+            { text: "Je t’aime", country: "Fransızca – Fransa" },
+            { text: "Ich liebe dich", country: "Almanca – Almanya" },
+            { text: "Ti amo", country: "İtalyanca – İtalya" },
+            { text: "Te amo", country: "İspanyolca – İspanya" },
+            { text: "Я тебя люблю", country: "Rusça – Rusya" },
+            { text: "愛してる", country: "Japonca – Japonya" },
+            { text: "사랑해", country: "Korece – Güney Kore" },
+            { text: "我爱你", country: "Çince – Çin" },
+            { text: "Σ’ αγαπώ", country: "Yunanca – Yunanistan" },
+            { text: "Eu te amo", country: "Portekizce – Brezilya" },
+            { text: "Forever & Always", country: "Sonsuzluk" },
+            { text: "Te amo", country: "Portekizce – Portekiz" },
+            { text: "Jeg elsker dig", country: "Danca – Danimarka" },
+            { text: "Ég elska þig", country: "İzlandaca – İzlanda" },
+            { text: "Miluji tě", country: "Çekçe – Çekya" },
+            { text: "Szeretlek", country: "Macarca – Macaristan" },
+            { text: "Te dua", country: "Arnavutça – Arnavutluk" },
+            { text: "T'estimo", country: "Katalanca – Katalonya" },
+            { text: "Aš tave myliu", country: "Litvanca – Litvanya" },
+            { text: "Es mīlu tevi", country: "Letonca – Letonya" },
+            { text: "Ma armastan sind", country: "Estonca – Estonya" },
+            { text: "Kuyayki", country: "Quechua – Peru" },
+            { text: "Inhobak", country: "Maltaca – Malta" },
+            { text: "Wo ai ni", country: "Mandarin (Latin) – Çin" },
+            { text: "Taim i’ ngra leat", country: "İrlandaca – İrlanda" },
+            { text: "Ndagukunda", country: "Kinyarwanda – Ruanda" }
+        ];
+
+        const overlay = document.getElementById("overlay");
+        const startBtn = document.getElementById("startBtn");
+        const loveText = document.getElementById("loveText");
+        const countryText = document.getElementById("countryText");
+
+        let index = 0;
+        let started = false;
+
+        function changeText() {
+            loveText.style.opacity = 0;
+            countryText.style.opacity = 0;
+
+            setTimeout(() => {
+                index = (index + 1) % loves.length;
+                loveText.innerText = loves[index].text + " " + LOVER_NAME + " ❤️";
+                countryText.innerText = loves[index].country;
+                loveText.style.opacity = 1;
+                countryText.style.opacity = 1;
+            }, 600);
+        }
+
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.innerHTML = "💖";
+            heart.style.position = "fixed";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.top = "-30px";
+            heart.style.fontSize = (18 + Math.random() * 22) + "px";
+            heart.style.opacity = Math.random();
+            heart.style.transition = "top 6s linear, opacity 6s";
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.style.top = "110vh";
+                heart.style.opacity = 0;
+            }, 100);
+
+            setTimeout(() => heart.remove(), 6000);
+        }
+
+        startBtn.onclick = () => {
+            if (started) return;
+            started = true;
+
+            startBtn.style.display = "none";
+            overlay.style.display = "block";
+
+            loveText.innerText = "Seni seviyorum " + LOVER_NAME + " ❤️";
+            loveText.style.opacity = 1;
+            countryText.style.opacity = 1;
+
+            setInterval(changeText, 1350);
+            setInterval(createHeart, 400);
+        };
+    </script>
+
+</body>
+
+</html>
